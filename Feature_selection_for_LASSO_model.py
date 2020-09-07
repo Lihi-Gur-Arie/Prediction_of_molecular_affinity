@@ -365,11 +365,43 @@ def backward_features_reduction(data):
 
     return final_data, results_valid
 
-##########################################################################################
+######################################################################################################
 
+def PCA_Feature_selection (X_train, X_valid, n_components):
+    """
+    Reduce features by Principal component analysis (PCA).
+    Linear dimensionality reduction using Singular Value Decomposition of the
+    data to project it to a lower dimensional space. The input data is centered
+    but not scaled for each feature before applying the SVD.
+
+    Parameters
+    ----------
+    X_train  :{array-like, sparse matrix} of shape (n_samples, n_features)
+        Training data
+    valid_data  :{array-like, sparse matrix} of shape (n_samples, n_features)
+        Validation data.
+    n_components: int
+        Amount of components to keep
+
+    Returns
+    -------
+    X_train_pca : pd.DataFrame
+        The new train_data
+    X_valid_pca : pd.DataFrame
+        The new valid_data
+    """
+    pca = PCA(n_components=n_components)
+    pca.fit(X_train)
+    X_train_pca = pca.transform(X_train)
+    X_valid_pca = pca.transform(X_valid)
+    print(f"original x train shape: {X_train.shape}")
+    print(f"transformed x train shape: {X_train_pca.shape}")
+    return X_train_pca, X_valid_pca
+
+#######################################################################################################
 def RFE_feature_seletion(train_data, valid_data, best_n_features):
     """
-    Remove features by RFE.
+    Reduce features by RFE.
     Given an external estimator that assigns weights to features (e.g., the
     coefficients of a linear model), the goal of recursive feature elimination
     (RFE) is to select features by recursively considering smaller and smaller
