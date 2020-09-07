@@ -8,11 +8,10 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import  Lasso, Ridge
 from termcolor import colored
-from sklearn.feature_selection import RFE
+from sklearn.feature_selection import RFE, VarianceThreshold
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import StratifiedKFold, KFold, LeaveOneOut
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.feature_selection import VarianceThreshold
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
@@ -98,7 +97,7 @@ class Remove_features_by_correlation:
 
             if len(collinear_index_list) > 0:                                                 # if there are any features above or equal to threshold:
 
-                # Remove one of the two collinear features. Remove the one with the better correlation to y
+                # Remove one of the two collinear features. Remove the one with the lower correlation to y
                 for j in collinear_index_list:                                                # for each of the collinear features, leave the one with the better y correlation
                     if correlation_to_Y.loc[j] > correlation_to_Y.loc[i]:
                         index_to_remove.append(i)
@@ -365,3 +364,49 @@ def backward_features_reduction(data):
     final_data = data.copy().drop(remove_list[1:], axis=1)
 
     return final_data, results_valid
+
+##########################################################################################
+
+def RFE_feature_seletion(train_data, valid_data, best_n_features):
+    """
+    Remove features by RFE.
+    Given an external estimator that assigns weights to features (e.g., the
+    coefficients of a linear model), the goal of recursive feature elimination
+    (RFE) is to select features by recursively considering smaller and smaller
+    sets of features.
+
+    Parameters
+    ----------
+    train_data  :{array-like, sparse matrix} of shape (n_samples, n_features+1)
+        Training data with label at the last column.
+    valid_data  :{array-like, sparse matrix} of shape (n_samples, n_features+1)
+        Validation data with label at the last column..
+    best_n_features: int
+        Amount of features to keep
+
+    Returns
+    -------
+    train_data : pd.DataFrame
+        The new train_data with reduced features
+    valid_data : pd.DataFrame
+        The new valid_data with reduced features
+    selected_features : list
+    feature_ranking : list
+    """
+
+    model = Lasso (alpha = 0.6)
+    rfe = RFE(model, best_n_features)
+    fit = rfe.fit(train_data.iloc[:, :-1], train_data.iloc[:, -1])  # train the model
+
+    Features_names = list(train_data.columns)
+    print(sorted(zip(map(lambda x: round(x, 4), rfe.ranking_), Features_names)))
+
+    selected_features = fit.support_
+    feature_ranking = fit.ranking_
+
+    best_features_index = np.where(selected_features)[0]
+    X_train_best_features = train_data.iloc[:,best_features_index]
+    X_valid_best_features = valid_data.iloc[:, best_features_index]
+    train_data = np.concatenate((X_train_best_features, train_data.iloc[:,-1:]), axis=1)
+    valid_data = np.concatenate((X_valid_best_features, valid_data.iloc[:,-1:]), axis=1)
+    return pd.DataFrame(train_data), pd.DataFrame(valid_data), selected_features,  feature_ranking
