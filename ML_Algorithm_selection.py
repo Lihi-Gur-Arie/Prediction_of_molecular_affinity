@@ -200,4 +200,3 @@ class Model:
         results = pd.Series([MSE_full, MSE_best_scores, MAE_full, MAE_best_scores, r2], index=['MSE', 'MSE_threshold', 'MAE', 'MAE_threshold', 'R2'])
 
         return pred, results
-
