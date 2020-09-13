@@ -2,7 +2,7 @@
   <img width="1000" height="450" src="mol_background.jpg">
 </p>
 
-# Prediction of a novel Drug
+# Antibiotic drug discovary using Machine Learning
 ## By Lihi Gur-Arie
 
 This repository contains code portions that were used to predict molecular affinity between small molecules
