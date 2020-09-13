@@ -1,5 +1,5 @@
-#Prediction of a novel antibiotic drug
-##By Lihi Gur-Arie
+# Prediction of a novel antibiotic drug
+## By Lihi Gur-Arie
 
 This repository contains code portions that were used to predict molecular affinity between small molecules
 and the bacterial ribosome, for antibiotic discovery purposes.

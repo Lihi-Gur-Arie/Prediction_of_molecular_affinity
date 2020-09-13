@@ -13,7 +13,7 @@ import seaborn as sns
 import pickle
 import shap
 
-class LGRF:
+class LassoRegressor:
     # This class preforms Lasso Regression.
     # Add Test data only if this is the final test.
     # The model will preform cross validation if there is no test data. If there is test data, it will train once on all the train data, and evaluate on the test data.
