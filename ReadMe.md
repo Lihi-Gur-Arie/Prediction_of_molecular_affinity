@@ -5,6 +5,10 @@
 # Antibiotic drug discovary using Machine Learning
 ## By Lihi Gur-Arie
 
+Due to the rapid emergence of antibiotic-resistant bacteria, there is a growing need to discover new antibiotics. 
+Protein synthesis is a crucial process to the bacteria survival, and molecules that inhibit the bacterial ribosome are attractive candidates as antibiotics. 
+In this research I deployed machine learning algorithm to predict molecular affinity of small molecules to the bacterial ribosome.
+
 This repository contains code portions that were used to predict molecular affinity between small molecules
 and the bacterial ribosome, for drug discovery purposes.
 
