@@ -27,8 +27,4 @@ Features were selected differently for each of the three ML algorithm.
 
 
 
-*This repository contains code portions that were used to predict molecular affinity between small molecules
-and the bacterial ribosome, for drug discovery purposes.*
-
-*The scientific article describing the process is yet to be published, and the data is still confidential.
-Hence, no data is included in this repository.*
+*This repository contains code portions that were used to predict molecular affinity. The scientific paper describing the process is yet to be published. The data is still confidential and not included in the repositoy*
